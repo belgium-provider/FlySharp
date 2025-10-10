@@ -5,7 +5,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace FlySharp.Client;
 
-public class XmlRpcClient(HttpClient httpClient, string apiEndpoint) : IXmlRpcClient
+public class XmlRpcClient(HttpClient httpClient, FlySipOptions options) : IXmlRpcClient
 {
     /// <summary>
     /// handling HTTP requests
@@ -13,11 +13,9 @@ public class XmlRpcClient(HttpClient httpClient, string apiEndpoint) : IXmlRpcCl
     private readonly HttpClient _httpClient = httpClient;
     
     /// <summary>
-    /// client based. (each client has his own connection string)
-    /// https://support.flysip.com/en/xml-rpc-rest-api/introduction-to-fly-sip-xml-rpc-api
-    /// Ex : $"{_pProviderUrl}/api.php?username={_pUsername}&apipassword={_pPassword}";
+    /// FlySip options object
     /// </summary>
-    private readonly string _apiEndpoint = apiEndpoint.TrimEnd('/');
+    private readonly FlySipOptions _options = options;
     
     /// <summary>
     /// Configure JSON settings for handling snake_case returns
@@ -43,10 +41,9 @@ public class XmlRpcClient(HttpClient httpClient, string apiEndpoint) : IXmlRpcCl
     {
         try
         {
-            string finalApiEndpoint = $"{_apiEndpoint}&action={method}";
+            string finalApiEndpoint = string.Concat(BuildApiEndpoint(), $"&action={method}");
             if (parameters != null)
-                finalApiEndpoint = string.Concat(finalApiEndpoint,
-                    $"&JSONString={JsonConvert.SerializeObject(parameters)}");
+                finalApiEndpoint = string.Concat(finalApiEndpoint, $"&JSONString={Uri.EscapeDataString(JsonConvert.SerializeObject(parameters))}");
 
             HttpResponseMessage httpResponse = await _httpClient.GetAsync(new Uri(finalApiEndpoint));
             string content = await httpResponse.Content.ReadAsStringAsync();
@@ -61,4 +58,10 @@ public class XmlRpcClient(HttpClient httpClient, string apiEndpoint) : IXmlRpcCl
             return new T(){Result = e.Message};
         }
     }
+
+    /// <summary>
+    /// Building api endpoint using flysip options
+    /// </summary>
+    /// <returns></returns>
+    private string BuildApiEndpoint() => $"{_options.ProviderUrl}/api.php?username={_options.Username}&apipassword={_options.Password}";
 }

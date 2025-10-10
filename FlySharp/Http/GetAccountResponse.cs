@@ -4,5 +4,5 @@ namespace FlySharp.Http;
 
 public class GetAccountResponse : BaseResponse
 {
-    public List<Account> Accounts { get; set; } = [];
+    public Account? Account { get; set; }
 }
