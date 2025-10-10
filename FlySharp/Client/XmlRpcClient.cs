@@ -1,5 +1,7 @@
 using FlySharp.Client.Abstract;
+using FlySharp.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace FlySharp.Client;
 
@@ -16,6 +18,19 @@ public class XmlRpcClient(HttpClient httpClient, string apiEndpoint) : IXmlRpcCl
     /// Ex : $"{_pProviderUrl}/api.php?username={_pUsername}&apipassword={_pPassword}";
     /// </summary>
     private readonly string _apiEndpoint = apiEndpoint.TrimEnd('/');
+    
+    /// <summary>
+    /// Configure JSON settings for handling snake_case returns
+    /// </summary>
+    private static readonly JsonSerializerSettings JsonSettings = new()
+    {
+        ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new SnakeCaseNamingStrategy()
+        },
+        MissingMemberHandling = MissingMemberHandling.Ignore,
+        NullValueHandling = NullValueHandling.Ignore
+    };
 
     /// <summary>
     /// Main method for call FlySIP XML RPC API
@@ -24,7 +39,7 @@ public class XmlRpcClient(HttpClient httpClient, string apiEndpoint) : IXmlRpcCl
     /// <param name="parameters"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public async Task<dynamic?> CallAsync(string method, object? parameters = null)
+    public async Task<T> CallAsync<T>(string method, object? parameters = null) where T : BaseResponse, new()
     {
         try
         {
@@ -39,11 +54,11 @@ public class XmlRpcClient(HttpClient httpClient, string apiEndpoint) : IXmlRpcCl
             if (!httpResponse.IsSuccessStatusCode)
                 throw new Exception("HTTP ERROR : " + content);
             
-            return JsonConvert.DeserializeObject<dynamic>(content);
+            return JsonConvert.DeserializeObject<T>(content, JsonSettings) ?? throw new Exception("JSON PARSING ERROR : " + content);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return null;
+            return new T(){Result = e.Message};
         }
     }
 }
