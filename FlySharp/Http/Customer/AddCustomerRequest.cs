@@ -1,6 +1,6 @@
 namespace FlySharp.Http;
 
-public class AddCustomerResponse : BaseResponse
+public class AddCustomerRequest : BaseResponse
 {
     public int ICustomer  { get; set; }
 }
