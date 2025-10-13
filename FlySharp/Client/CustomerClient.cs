@@ -1,5 +1,5 @@
 using FlySharp.Client.Abstract;
-using FlySharp.Http;
+using FlySharp.Http.Customer;
 
 namespace FlySharp.Client;
 

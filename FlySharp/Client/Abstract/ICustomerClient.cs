@@ -1,4 +1,4 @@
-using FlySharp.Http;
+using FlySharp.Http.Customer;
 
 namespace FlySharp.Client.Abstract;
 

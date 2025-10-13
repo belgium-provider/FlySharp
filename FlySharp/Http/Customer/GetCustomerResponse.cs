@@ -1,8 +1,8 @@
 using FlySharp.Models;
 
-namespace FlySharp.Http;
+namespace FlySharp.Http.Customer;
 
 public class GetCustomerResponse : BaseResponse
 {
-    public Customer? Customer { get; set; }
+    public Models.Customer? Customer { get; set; }
 }

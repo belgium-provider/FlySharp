@@ -1,8 +1,8 @@
 using FlySharp.Models;
 
-namespace FlySharp.Http;
+namespace FlySharp.Http.Account;
 
 public class GetAccountResponse : BaseResponse
 {
-    public Account? Account { get; set; }
+    public Models.Account? Account { get; set; }
 }

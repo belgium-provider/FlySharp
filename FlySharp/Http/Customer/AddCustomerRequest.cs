@@ -1,4 +1,4 @@
-namespace FlySharp.Http;
+namespace FlySharp.Http.Customer;
 
 public class AddCustomerRequest : BaseResponse
 {
