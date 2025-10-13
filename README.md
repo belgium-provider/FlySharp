@@ -14,7 +14,7 @@
 FlySharp is a base C# SDK aiming to facilitate FlySIP api integration into Belgium-Provider VOIP solutions using FlySIP as voip service.
 
 >[!Important]
->This project was developped as a base lib to other tools and is based on my personnal needs.
+>This project was developped as a base lib to other tools and is based on my personnal needs. Feel free to use it as a base for your own work.
 
 ## Project Struct
 
