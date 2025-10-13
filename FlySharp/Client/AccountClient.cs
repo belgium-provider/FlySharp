@@ -20,18 +20,28 @@ public class AccountClient(IXmlRpcClient xmlRpcClient) : IAccountClient
     /// <param name="username"></param>
     /// <returns></returns>
     public async Task<GetAccountResponse> GetAccountByUsernameAsync(string username) => await _xmlRpcClient.CallAsync<GetAccountResponse>("getAccountInfo", new {username});
-    
+
     /// <summary>
     /// Listing accounts
     /// </summary>
     /// <param name="offset"></param>
     /// <param name="limit"></param>
+    /// <param name="customerId"></param>
     /// <returns></returns>
-    public async Task<GetAccountsResponse> GetAccountsAsync(int? offset = null, int? limit = null)
+    public async Task<GetAccountsResponse> GetAccountsAsync(int? offset = null, int? limit = null, int? customerId = null)
     {
         int page = offset ?? 0;
         int pageSize = limit ?? 100;
+        
+        var payload = new Dictionary<string, object>
+        {
+            ["offset"] = page,
+            ["limit"] = pageSize
+        };
 
-        return await _xmlRpcClient.CallAsync<GetAccountsResponse>("listAccounts", new {offset = page, limit = pageSize});
+        if (customerId.HasValue)
+            payload["i_customer"] = customerId.Value;
+
+        return await _xmlRpcClient.CallAsync<GetAccountsResponse>("listAccounts", payload);
     }
 }
