@@ -5,12 +5,12 @@ using Newtonsoft.Json.Serialization;
 
 namespace FlySharp.Client;
 
-public class XmlRpcClient(HttpClient httpClient, FlySipOptions options) : IXmlRpcClient
+public abstract class BaseClient(FlySipOptions options, HttpClient? httpClient = null) : IDisposable
 {
     /// <summary>
     /// handling HTTP requests
     /// </summary>
-    private readonly HttpClient _httpClient = httpClient;
+    private readonly HttpClient _httpClient = httpClient ?? new HttpClient();
     
     /// <summary>
     /// FlySip options object
@@ -64,4 +64,9 @@ public class XmlRpcClient(HttpClient httpClient, FlySipOptions options) : IXmlRp
     /// </summary>
     /// <returns></returns>
     private string BuildApiEndpoint() => $"{_options.ProviderUrl}/api.php?username={_options.Username}&apipassword={_options.Password}";
+    
+    /// <summary>
+    /// Dispose http client
+    /// </summary>
+    void IDisposable.Dispose() =>  _httpClient.Dispose();
 }

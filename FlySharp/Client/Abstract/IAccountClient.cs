@@ -2,7 +2,7 @@ using FlySharp.Http.Account;
 
 namespace FlySharp.Client.Abstract;
 
-public interface IAccountClient
+public interface IAccountClient : IBaseClient
 {
     Task<GetAccountResponse> GetAccountByIdAsync(int id);
     Task<GetAccountResponse> GetAccountByUsernameAsync(string username);

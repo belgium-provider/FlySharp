@@ -3,23 +3,21 @@ using FlySharp.Http.Account;
 
 namespace FlySharp.Client;
 
-public class AccountClient(IXmlRpcClient xmlRpcClient) : IAccountClient
+public class AccountClient(FlySipOptions options, HttpClient? httpClient = null) : BaseClient(options, httpClient), IAccountClient
 {
-    private readonly IXmlRpcClient _xmlRpcClient = xmlRpcClient;
-    
     /// <summary>
     /// Get account using it's id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<GetAccountResponse> GetAccountByIdAsync(int id) => await _xmlRpcClient.CallAsync<GetAccountResponse>("getAccountInfo", new {i_account = id});
+    public async Task<GetAccountResponse> GetAccountByIdAsync(int id) => await this.CallAsync<GetAccountResponse>("getAccountInfo", new {i_account = id});
     
     /// <summary>
     /// Get account using username
     /// </summary>
     /// <param name="username"></param>
     /// <returns></returns>
-    public async Task<GetAccountResponse> GetAccountByUsernameAsync(string username) => await _xmlRpcClient.CallAsync<GetAccountResponse>("getAccountInfo", new {username});
+    public async Task<GetAccountResponse> GetAccountByUsernameAsync(string username) => await this.CallAsync<GetAccountResponse>("getAccountInfo", new {username});
 
     /// <summary>
     /// Listing accounts
@@ -42,7 +40,7 @@ public class AccountClient(IXmlRpcClient xmlRpcClient) : IAccountClient
         if (customerId.HasValue)
             payload["i_customer"] = customerId.Value;
 
-        return await _xmlRpcClient.CallAsync<GetAccountsResponse>("listAccounts", payload);
+        return await this.CallAsync<GetAccountsResponse>("listAccounts", payload);
     }
     
     #region MINUTES_RATES
@@ -53,7 +51,7 @@ public class AccountClient(IXmlRpcClient xmlRpcClient) : IAccountClient
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<GetAccountMinutPlanResponse> GetAccountMinutPlanByIdAsync(int id) => await _xmlRpcClient.CallAsync<GetAccountMinutPlanResponse>("getAccountMinutePlans", new {i_account = id});
+    public async Task<GetAccountMinutPlanResponse> GetAccountMinutPlanByIdAsync(int id) => await this.CallAsync<GetAccountMinutPlanResponse>("getAccountMinutePlans", new {i_account = id});
 
     public async Task<GetAccountRatesResponse> GetAccountRatesByIdAsync(int id, int? offset = null, int? limit = null, string? prefix = null)
     {
@@ -70,7 +68,7 @@ public class AccountClient(IXmlRpcClient xmlRpcClient) : IAccountClient
         if (prefix != null)
             payload["prefix"] = prefix;
 
-        return await _xmlRpcClient.CallAsync<GetAccountRatesResponse>("getAccountRates", payload);
+        return await this.CallAsync<GetAccountRatesResponse>("getAccountRates", payload);
     }
 
     #endregion
