@@ -24,6 +24,11 @@ FlySharp is a base C# SDK aiming to facilitate FlySIP api integration into Belgi
 
 ---
 
+## Online NuGet package
+
+<a href="https://www.nuget.org/packages/FlySharp/" target="_blank">OFFICIAL NUGET PACKAGE</a>
+
+
 ## Official doc
 
 You can consul the official FlySIP xmlrpc api documentation here : <a href="https://support.flysip.com/en/xml-rpc-rest-api#xml-rpc-api-manipulating-accounts" target="_blank">OFFICIAL DOCUMENTATION</a>
