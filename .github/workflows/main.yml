@@ -15,5 +15,5 @@ jobs:
           dotnet-version: '8.0.x'
       - name: Pack library
         run: dotnet pack FlySharp/FlySharp.csproj -c Release
-      - name: Publish to GitHub Packages
+      - name: Publish to NuGet.org
         run: dotnet nuget push FlySharp/artifacts/*.nupkg --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }} --source https://api.nuget.org/v3/index.json
