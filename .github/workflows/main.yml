@@ -1,0 +1,19 @@
+name: Publish NuGet
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Pack library
+        run: dotnet pack FlySharp/FlySharp.csproj -c Release
+      - name: Publish to GitHub Packages
+        run: dotnet nuget push FlySharp/artifacts/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
