@@ -9,7 +9,7 @@
 
     <!-- metadata of package -->
     <PackageId>FlySharp</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Authors>Yekuuun</Authors>
     <Company>Yekuuun</Company>
     <Description>A basic SDK for the FlySip XML RPC.</Description>
