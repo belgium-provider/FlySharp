@@ -1,16 +1,19 @@
 ﻿using DotNetEnv;
+using FlySharp.Builder;
 using FlySharp.Client;
 using FlySharp.Client.Abstract;
-using FlySharp.Http.Account;
-using FlySharp.Http.Customer;
+using FlySharp.Http.Account.Request;
+using FlySharp.Http.Account.Response;
+using FlySharp.Http.Customer.Request;
+using FlySharp.Http.Customer.Response;
 using FlySharp.Models;
 
 namespace FlySharp.Tester;
 
 public class Program
 {
-    private const string PProviderUrl = "TO_SET";
-    private const string PUsername = "TO_SET";
+    private const string PProviderUrl = "https://switch1.belgium-voip.com";
+    private const string PUsername = "admin";
     
     public static async Task Main(string[] args)
     {
@@ -34,7 +37,8 @@ public class Program
 
         FlySipOptions options = InitOptions(accountPwd);
         using ICustomerClient client = new CustomerClient(options);
-        GetCustomersResponse customers = await client.GetCustomersAsync(wholeSalerId:1);
+        GetCustomersRequest request = new ListCustomersRequestBuilder(wholeSaler: 1).Build();
+        GetCustomersResponse customers = await client.GetCustomersAsync(request);
         if (customers.Result != "OK")
         {
             Console.WriteLine("Failed to get customers");
@@ -60,10 +64,11 @@ public class Program
 
         FlySipOptions options = InitOptions(accountPwd);
         using IAccountClient client = new AccountClient(options);
-        GetAccountsResponse accounts = await client.GetAccountsAsync();
+        GetAccountsRequest request = new ListAccountsRequestBuilder().Build();
+        GetAccountsResponse accounts = await client.GetAccountsAsync(request);
         if (accounts.Result != "OK")
         {
-            Console.WriteLine("Failed to get accounts");
+            Console.WriteLine(accounts.Result);
             return;
         }
 
@@ -80,5 +85,5 @@ public class Program
     /// </summary>
     /// <param name="accountPwd"></param>
     /// <returns></returns>
-    private static FlySipOptions InitOptions(string accountPwd) => new FlySipOptions(){Password = accountPwd, ProviderUrl = PProviderUrl, Username = PUsername};
+    private static FlySipOptions InitOptions(string accountPwd) => new FlySipOptions(PProviderUrl, PUsername, accountPwd);
 }

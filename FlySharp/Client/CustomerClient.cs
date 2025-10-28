@@ -1,13 +1,13 @@
 using FlySharp.Client.Abstract;
 using FlySharp.Http;
-using FlySharp.Http.Customer;
+using FlySharp.Http.Customer.Request;
+using FlySharp.Http.Customer.Response;
 
 namespace FlySharp.Client;
 
 /// <summary>
 /// This class is destinated to supper admin usage. Managing whole server
 /// </summary>
-/// <param name="xmlRpcClient"></param>
 public class CustomerClient(FlySipOptions options, HttpClient? httpClient = null) : BaseClient(options, httpClient), ICustomerClient
 {
 
@@ -22,11 +22,9 @@ public class CustomerClient(FlySipOptions options, HttpClient? httpClient = null
     /// <summary>
     /// retrieve list of customers.
     /// </summary>
-    /// <param name="offset"></param>
-    /// <param name="limit"></param>
-    /// <param name="wholeSalerId"></param>
+    /// <param name="request"></param>
     /// <returns></returns>
-    public async Task<GetCustomersResponse> GetCustomersAsync(int wholeSalerId, int? offset = null, int? limit = null) => await this.CallAsync<GetCustomersResponse>("listCustomers", new {offset = offset ?? 0, limit = limit ?? 100, i_wholesaler =  wholeSalerId});
+    public async Task<GetCustomersResponse> GetCustomersAsync(GetCustomersRequest request) => await this.CallAsync<GetCustomersResponse>("listCustomers", request);
     
     /// <summary>
     /// Creating a new customer

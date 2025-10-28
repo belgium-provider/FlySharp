@@ -1,6 +1,6 @@
 using FlySharp.Models;
 
-namespace FlySharp.Http.Customer;
+namespace FlySharp.Http.Customer.Response;
 
 public class GetCustomerResponse : BaseResponse
 {
