@@ -1,8 +1,8 @@
 using Newtonsoft.Json;
 
-namespace FlySharp.Http.Payments;
+namespace FlySharp.Http.Customer.Request;
 
-public class AddCustomerFundRequest : BaseAddFundRequest
+public class AddCustomerResponse : BaseResponse
 {
     [JsonProperty("i_customer")]
     public int ICustomer { get; set; }

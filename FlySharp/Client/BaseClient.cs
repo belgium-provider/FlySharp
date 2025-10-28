@@ -22,10 +22,6 @@ public abstract class BaseClient(FlySipOptions options, HttpClient? httpClient =
     /// </summary>
     private static readonly JsonSerializerSettings JsonSettings = new()
     {
-        ContractResolver = new DefaultContractResolver
-        {
-            NamingStrategy = new SnakeCaseNamingStrategy()
-        },
         MissingMemberHandling = MissingMemberHandling.Ignore,
         NullValueHandling = NullValueHandling.Ignore
     };
@@ -51,7 +47,7 @@ public abstract class BaseClient(FlySipOptions options, HttpClient? httpClient =
             if (!httpResponse.IsSuccessStatusCode)
                 throw new Exception("HTTP ERROR : " + content);
             
-            return JsonConvert.DeserializeObject<T>(content, JsonSettings) ?? throw new Exception("JSON PARSING ERROR : " + content);
+            return JsonConvert.DeserializeObject<T>(content) ?? throw new Exception("JSON PARSING ERROR : " + content);
         }
         catch (Exception e)
         {

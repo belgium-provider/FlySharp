@@ -1,6 +1,6 @@
 using FlySharp.Models;
 
-namespace FlySharp.Http.Account;
+namespace FlySharp.Http.Account.Response;
 
 public class GetAccountsResponse : BaseResponse
 {

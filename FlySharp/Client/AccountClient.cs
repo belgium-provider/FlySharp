@@ -1,5 +1,6 @@
 using FlySharp.Client.Abstract;
-using FlySharp.Http.Account;
+using FlySharp.Http.Account.Request;
+using FlySharp.Http.Account.Response;
 
 namespace FlySharp.Client;
 
@@ -22,26 +23,9 @@ public class AccountClient(FlySipOptions options, HttpClient? httpClient = null)
     /// <summary>
     /// Listing accounts
     /// </summary>
-    /// <param name="offset"></param>
-    /// <param name="limit"></param>
-    /// <param name="customerId"></param>
+    /// <param name="request"></param>
     /// <returns></returns>
-    public async Task<GetAccountsResponse> GetAccountsAsync(int? offset = null, int? limit = null, int? customerId = null)
-    {
-        int page = offset ?? 0;
-        int pageSize = limit ?? 100;
-        
-        var payload = new Dictionary<string, object>
-        {
-            ["offset"] = page,
-            ["limit"] = pageSize
-        };
-
-        if (customerId.HasValue)
-            payload["i_customer"] = customerId.Value;
-
-        return await this.CallAsync<GetAccountsResponse>("listAccounts", payload);
-    }
+    public async Task<GetAccountsResponse> GetAccountsAsync(GetAccountsRequest request) => await this.CallAsync<GetAccountsResponse>("listAccounts", request);
     
     #region MINUTES_RATES
     
@@ -51,25 +35,14 @@ public class AccountClient(FlySipOptions options, HttpClient? httpClient = null)
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<GetAccountMinutPlanResponse> GetAccountMinutPlanByIdAsync(int id) => await this.CallAsync<GetAccountMinutPlanResponse>("getAccountMinutePlans", new {i_account = id});
+    public async Task<GetAccountMinutPlanResponse> GetAccountMinutePlanByIdAsync(int id) => await this.CallAsync<GetAccountMinutPlanResponse>("getAccountMinutePlans", new {i_account = id});
 
-    public async Task<GetAccountRatesResponse> GetAccountRatesByIdAsync(int id, int? offset = null, int? limit = null, string? prefix = null)
-    {
-        int page = offset ?? 0;
-        int pageSize = limit ?? 100;
-        
-        var payload = new Dictionary<string, object>
-        {
-            ["i_account"] = id,
-            ["offset"] = page,
-            ["limit"] = pageSize
-        };
-
-        if (prefix != null)
-            payload["prefix"] = prefix;
-
-        return await this.CallAsync<GetAccountRatesResponse>("getAccountRates", payload);
-    }
+    /// <summary>
+    /// Getting account rates.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    public async Task<GetAccountRatesResponse> GetAccountRatesByIdAsync(GetAccountRatesRequest request) => await this.CallAsync<GetAccountRatesResponse>("getAccountRates", request);
 
     #endregion
 }
