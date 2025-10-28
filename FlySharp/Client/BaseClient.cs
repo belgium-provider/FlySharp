@@ -43,7 +43,7 @@ public abstract class BaseClient(FlySipOptions options, HttpClient? httpClient =
         {
             string finalApiEndpoint = string.Concat(BuildApiEndpoint(), $"&action={method}");
             if (parameters != null)
-                finalApiEndpoint = string.Concat(finalApiEndpoint, $"&JSONString={Uri.EscapeDataString(JsonConvert.SerializeObject(parameters))}");
+                finalApiEndpoint = string.Concat(finalApiEndpoint, $"&JSONString={Uri.EscapeDataString(JsonConvert.SerializeObject(parameters, JsonSettings))}");
 
             HttpResponseMessage httpResponse = await _httpClient.GetAsync(new Uri(finalApiEndpoint));
             string content = await httpResponse.Content.ReadAsStringAsync();
