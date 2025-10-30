@@ -21,4 +21,12 @@ public class PaymentClient(FlySipOptions options, HttpClient? httpClient = null)
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public async Task<BaseResponse> AddCustomerFundsAsync(AddCustomerFundRequest payload) => await this.CallAsync<BaseResponse>("customerAddFunds", payload);
+    
+    /// <summary>
+    /// Add fund to a vendor account.
+    /// </summary>
+    /// <param name="payload"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<BaseResponse> AddVendorFundsAsync(AddVendorFundRequest payload) => await this.CallAsync<BaseResponse>("vendorAddFunds", payload);
 }

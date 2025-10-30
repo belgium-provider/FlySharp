@@ -39,4 +39,21 @@ public class CustomerClient(FlySipOptions options, HttpClient? httpClient = null
     /// <param name="request"></param>
     /// <returns></returns>
     public async Task<BaseResponse> UpdateCustomerAsync(UpdateCustomerRequest request) => await this.CallAsync<BaseResponse>("updateCustomer", request);
+    
+    /// <summary>
+    /// Top level Customer could also issue this API call for any Customer in his hierarchy, including subcustomers of his subcustomers.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="wholeSalerId"></param>
+    /// <returns></returns>
+    public async Task<BaseResponse> BlockCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("blockCustomer", new  {i_customer = id, i_wholesaler = wholeSalerId});
+    
+    /// <summary>
+    /// This application is used to unblock a customer.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="wholeSalerId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<BaseResponse> UnblockCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("unblockCustomer", new {i_customer = id, i_wholesaler = wholeSalerId});
 }

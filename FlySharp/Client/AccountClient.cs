@@ -1,4 +1,5 @@
 using FlySharp.Client.Abstract;
+using FlySharp.Http;
 using FlySharp.Http.Account.Request;
 using FlySharp.Http.Account.Response;
 
@@ -27,6 +28,34 @@ public class AccountClient(FlySipOptions options, HttpClient? httpClient = null)
     /// <returns></returns>
     public async Task<GetAccountsResponse> GetAccountsAsync(GetAccountsRequest request) => await this.CallAsync<GetAccountsResponse>("listAccounts", request);
     
+    /// <summary>
+    /// Deleting a single account
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<BaseResponse> DeleteAccountAsync(int id) => await this.CallAsync<BaseResponse>("deleteAccount",  new {i_account = id});
+    
+    /// <summary>
+    /// Blocking a single account
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<BaseResponse> BlockAccountAsync(int id) => await this.CallAsync<BaseResponse>("blockAccount", new {i_account = id});
+    
+    /// <summary>
+    /// Unblocking a single account
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<BaseResponse> UnblockAccountAsync(int id) => await this.CallAsync<BaseResponse>("unblockAccount", new {i_account = id});
+    
+    /// <summary>
+    /// This application is used to reset account's one time password used to login into web interface. Only accounts of authenticated customer can be reset.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    public async Task<ResetAccountPwdResponse> ResetAccountPwdAsync(string username) => await this.CallAsync<ResetAccountPwdResponse>("resetAccountOneTimePassword", new {username});
+
     #region MINUTES_RATES
     
     /// <summary>

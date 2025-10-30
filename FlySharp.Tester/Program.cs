@@ -12,8 +12,8 @@ namespace FlySharp.Tester;
 
 public class Program
 {
-    private const string PProviderUrl = "https://switch1.belgium-voip.com";
-    private const string PUsername = "admin";
+    private const string PProviderUrl = "TO_SET";
+    private const string PUsername = "TO_SET";
     
     public static async Task Main(string[] args)
     {

@@ -10,4 +10,6 @@ public interface ICustomerClient : IBaseClient
     Task<GetCustomersResponse> GetCustomersAsync(GetCustomersRequest request);
     Task<AddCustomerResponse> AddCustomerAsync(AddCustomerRequest request);
     Task<BaseResponse> UpdateCustomerAsync(UpdateCustomerRequest request);
+    Task<BaseResponse> BlockCustomerAsync(int id, int wholeSalerId);
+    Task<BaseResponse> UnblockCustomerAsync(int id, int wholeSalerId);
 }

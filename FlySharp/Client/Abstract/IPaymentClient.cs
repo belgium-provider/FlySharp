@@ -7,4 +7,5 @@ public interface IPaymentClient : IBaseClient
 {
     Task<BaseResponse> AddAccountFundsAsync(AddAccountFundRequest payload);
     Task<BaseResponse> AddCustomerFundsAsync(AddCustomerFundRequest payload);
+    Task<BaseResponse> AddVendorFundsAsync(AddVendorFundRequest payload);
 }
