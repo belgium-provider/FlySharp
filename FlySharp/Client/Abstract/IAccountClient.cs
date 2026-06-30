@@ -25,6 +25,7 @@ public interface IAccountClient : IBaseClient
     #endregion
 
     #region ACCOUNTS
+    Task<CreateAccountResponse> CreateAccountAsync(CreateAccountRequest request);
     Task<GetAccountResponse> GetAccountByIdAsync(int id);
     Task<GetAccountResponse> GetAccountByUsernameAsync(string username);
     Task<GetAccountsResponse> GetAccountsAsync(GetAccountsRequest request);

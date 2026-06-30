@@ -9,6 +9,8 @@ namespace FlySharp.Client;
 
 public class AccountClient(FlySipOptions options, HttpClient? httpClient = null) : BaseClient(options, httpClient), IAccountClient
 {
+    public async Task<CreateAccountResponse> CreateAccountAsync(CreateAccountRequest request) => await this.CallAsync<CreateAccountResponse>("createAccount", request);
+
     /// <summary>
     /// Get account using it's id
     /// </summary>
