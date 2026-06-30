@@ -64,5 +64,5 @@ public abstract class BaseClient(FlySipOptions options, HttpClient? httpClient =
     /// <summary>
     /// Dispose http client
     /// </summary>
-    void IDisposable.Dispose() =>  _httpClient.Dispose();
+    void IDisposable.Dispose() =>  _httpClient?.Dispose();
 }
