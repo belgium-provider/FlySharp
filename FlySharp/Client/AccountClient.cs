@@ -2,6 +2,8 @@ using FlySharp.Client.Abstract;
 using FlySharp.Http;
 using FlySharp.Http.Account.Request;
 using FlySharp.Http.Account.Response;
+using FlySharp.Http.Trunk.Request;
+using FlySharp.Http.Trunk.Response;
 
 namespace FlySharp.Client;
 
@@ -55,6 +57,20 @@ public class AccountClient(FlySipOptions options, HttpClient? httpClient = null)
     /// <param name="username"></param>
     /// <returns></returns>
     public async Task<ResetAccountPwdResponse> ResetAccountPwdAsync(string username) => await this.CallAsync<ResetAccountPwdResponse>("resetAccountOneTimePassword", new {username});
+
+    #region TRUNKS
+
+    public async Task<TrunkMutationResponse> CreateTrunkAsync(CreateTrunkRequest request) => await this.CallAsync<TrunkMutationResponse>("createTrunk", request);
+
+    public async Task<TrunkMutationResponse> UpdateTrunkAsync(UpdateTrunkRequest request) => await this.CallAsync<TrunkMutationResponse>("updateTrunk", request);
+
+    public async Task<TrunkMutationResponse> DeleteTrunkAsync(int trunkId) => await this.CallAsync<TrunkMutationResponse>("deleteTrunk", new { i_trunk = trunkId });
+
+    public async Task<GetTrunkInfoResponse> GetTrunkAsync(int trunkId) => await this.CallAsync<GetTrunkInfoResponse>("getTrunkInfo", new { i_trunk = trunkId });
+
+    public async Task<GetTrunksListResponse> GetTrunksAsync(GetTrunksListRequest request) => await this.CallAsync<GetTrunksListResponse>("getTrunksList", request);
+
+    #endregion
 
     #region MINUTES_RATES
     
