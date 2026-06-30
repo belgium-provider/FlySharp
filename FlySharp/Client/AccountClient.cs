@@ -72,6 +72,20 @@ public class AccountClient(FlySipOptions options, HttpClient? httpClient = null)
 
     #endregion
 
+    #region TRUNK_CONNECTIONS
+
+    public async Task<TrunkConnectionMutationResponse> CreateTrunkConnectionAsync(CreateTrunkConnectionRequest request) => await this.CallAsync<TrunkConnectionMutationResponse>("createTrunkConnection", request);
+
+    public async Task<TrunkConnectionMutationResponse> UpdateTrunkConnectionAsync(UpdateTrunkConnectionRequest request) => await this.CallAsync<TrunkConnectionMutationResponse>("updateTrunkConnection", request);
+
+    public async Task<TrunkConnectionMutationResponse> DeleteTrunkConnectionAsync(int trunkConnectionId) => await this.CallAsync<TrunkConnectionMutationResponse>("deleteTrunkConnection", new { i_trunk_connection = trunkConnectionId });
+
+    public async Task<GetTrunkConnectionInfoResponse> GetTrunkConnectionAsync(int trunkConnectionId) => await this.CallAsync<GetTrunkConnectionInfoResponse>("getTrunkConnectionInfo", new { i_trunk_connection = trunkConnectionId });
+
+    public async Task<GetTrunkConnectionsListResponse> GetTrunkConnectionsAsync(GetTrunkConnectionsListRequest request) => await this.CallAsync<GetTrunkConnectionsListResponse>("getTrunkConnectionsList", request);
+
+    #endregion
+
     #region MINUTES_RATES
     
     /// <summary>

@@ -16,6 +16,14 @@ public interface IAccountClient : IBaseClient
     Task<GetTrunksListResponse> GetTrunksAsync(GetTrunksListRequest request);
     #endregion
 
+    #region TRUNK_CONNECTIONS
+    Task<TrunkConnectionMutationResponse> CreateTrunkConnectionAsync(CreateTrunkConnectionRequest request);
+    Task<TrunkConnectionMutationResponse> UpdateTrunkConnectionAsync(UpdateTrunkConnectionRequest request);
+    Task<TrunkConnectionMutationResponse> DeleteTrunkConnectionAsync(int trunkConnectionId);
+    Task<GetTrunkConnectionInfoResponse> GetTrunkConnectionAsync(int trunkConnectionId);
+    Task<GetTrunkConnectionsListResponse> GetTrunkConnectionsAsync(GetTrunkConnectionsListRequest request);
+    #endregion
+
     #region ACCOUNTS
     Task<GetAccountResponse> GetAccountByIdAsync(int id);
     Task<GetAccountResponse> GetAccountByUsernameAsync(string username);
