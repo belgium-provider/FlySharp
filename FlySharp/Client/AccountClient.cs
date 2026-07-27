@@ -2,11 +2,15 @@ using FlySharp.Client.Abstract;
 using FlySharp.Http;
 using FlySharp.Http.Account.Request;
 using FlySharp.Http.Account.Response;
+using FlySharp.Http.Trunk.Request;
+using FlySharp.Http.Trunk.Response;
 
 namespace FlySharp.Client;
 
 public class AccountClient(FlySipOptions options, HttpClient? httpClient = null) : BaseClient(options, httpClient), IAccountClient
 {
+    public async Task<CreateAccountResponse> CreateAccountAsync(CreateAccountRequest request) => await this.CallAsync<CreateAccountResponse>("createAccount", request);
+
     /// <summary>
     /// Get account using it's id
     /// </summary>
@@ -55,6 +59,34 @@ public class AccountClient(FlySipOptions options, HttpClient? httpClient = null)
     /// <param name="username"></param>
     /// <returns></returns>
     public async Task<ResetAccountPwdResponse> ResetAccountPwdAsync(string username) => await this.CallAsync<ResetAccountPwdResponse>("resetAccountOneTimePassword", new {username});
+
+    #region TRUNKS
+
+    public async Task<TrunkMutationResponse> CreateTrunkAsync(CreateTrunkRequest request) => await this.CallAsync<TrunkMutationResponse>("createTrunk", request);
+
+    public async Task<TrunkMutationResponse> UpdateTrunkAsync(UpdateTrunkRequest request) => await this.CallAsync<TrunkMutationResponse>("updateTrunk", request);
+
+    public async Task<TrunkMutationResponse> DeleteTrunkAsync(int trunkId) => await this.CallAsync<TrunkMutationResponse>("deleteTrunk", new { i_trunk = trunkId });
+
+    public async Task<GetTrunkInfoResponse> GetTrunkAsync(int trunkId) => await this.CallAsync<GetTrunkInfoResponse>("getTrunkInfo", new { i_trunk = trunkId });
+
+    public async Task<GetTrunksListResponse> GetTrunksAsync(GetTrunksListRequest request) => await this.CallAsync<GetTrunksListResponse>("getTrunksList", request);
+
+    #endregion
+
+    #region TRUNK_CONNECTIONS
+
+    public async Task<TrunkConnectionMutationResponse> CreateTrunkConnectionAsync(CreateTrunkConnectionRequest request) => await this.CallAsync<TrunkConnectionMutationResponse>("createTrunkConnection", request);
+
+    public async Task<TrunkConnectionMutationResponse> UpdateTrunkConnectionAsync(UpdateTrunkConnectionRequest request) => await this.CallAsync<TrunkConnectionMutationResponse>("updateTrunkConnection", request);
+
+    public async Task<TrunkConnectionMutationResponse> DeleteTrunkConnectionAsync(int trunkConnectionId) => await this.CallAsync<TrunkConnectionMutationResponse>("deleteTrunkConnection", new { i_trunk_connection = trunkConnectionId });
+
+    public async Task<GetTrunkConnectionInfoResponse> GetTrunkConnectionAsync(int trunkConnectionId) => await this.CallAsync<GetTrunkConnectionInfoResponse>("getTrunkConnectionInfo", new { i_trunk_connection = trunkConnectionId });
+
+    public async Task<GetTrunkConnectionsListResponse> GetTrunkConnectionsAsync(GetTrunkConnectionsListRequest request) => await this.CallAsync<GetTrunkConnectionsListResponse>("getTrunkConnectionsList", request);
+
+    #endregion
 
     #region MINUTES_RATES
     

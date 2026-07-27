@@ -12,4 +12,6 @@ public interface ICustomerClient : IBaseClient
     Task<BaseResponse> UpdateCustomerAsync(UpdateCustomerRequest request);
     Task<BaseResponse> BlockCustomerAsync(int id, int wholeSalerId);
     Task<BaseResponse> UnblockCustomerAsync(int id, int wholeSalerId);
+    Task<BaseResponse> DeleteCustomerAsync(int id, int wholeSalerId);
+    Task<AuthCustomerResponse> AuthCustomerAsync(string username, string password);
 }

@@ -1,11 +1,19 @@
-﻿using DotNetEnv;
+﻿using System.Security.Cryptography;
+using DotNetEnv;
 using FlySharp.Builder;
 using FlySharp.Client;
 using FlySharp.Client.Abstract;
+using FlySharp.Http;
 using FlySharp.Http.Account.Request;
 using FlySharp.Http.Account.Response;
 using FlySharp.Http.Customer.Request;
 using FlySharp.Http.Customer.Response;
+using FlySharp.Http.Did.Request;
+using FlySharp.Http.Did.Response;
+using FlySharp.Http.Tariff.Request;
+using FlySharp.Http.Tariff.Response;
+using FlySharp.Http.Trunk.Request;
+using FlySharp.Http.Trunk.Response;
 using FlySharp.Models;
 
 namespace FlySharp.Tester;
@@ -26,16 +34,12 @@ public class Program
         await ListCustomersAsync();
     }
     
-        /// <summary>
+    /// <summary>
     /// Listing all customers.
     /// </summary>
     private static async Task ListCustomersAsync()
     {
-        string? accountPwd = Environment.GetEnvironmentVariable("FLY_SIP_PASSWORD");
-        if (string.IsNullOrEmpty(accountPwd))
-            return;
-
-        FlySipOptions options = InitOptions(accountPwd);
+        FlySipOptions options = InitOptions(GetMasterPwd());
         using ICustomerClient client = new CustomerClient(options);
         GetCustomersRequest request = new ListCustomersRequestBuilder(wholeSaler: 1).Build();
         GetCustomersResponse customers = await client.GetCustomersAsync(request);
@@ -58,11 +62,7 @@ public class Program
     /// </summary>
     private static async Task ListAccountsAsync()
     {
-        string? accountPwd = Environment.GetEnvironmentVariable("FLY_SIP_PASSWORD");
-        if (string.IsNullOrEmpty(accountPwd))
-            return;
-
-        FlySipOptions options = InitOptions(accountPwd);
+        FlySipOptions options = InitOptions(GetMasterPwd());
         using IAccountClient client = new AccountClient(options);
         GetAccountsRequest request = new ListAccountsRequestBuilder().Build();
         GetAccountsResponse accounts = await client.GetAccountsAsync(request);
@@ -86,4 +86,10 @@ public class Program
     /// <param name="accountPwd"></param>
     /// <returns></returns>
     private static FlySipOptions InitOptions(string accountPwd) => new FlySipOptions(PProviderUrl, PUsername, accountPwd);
+
+    private static string GetMasterPwd()
+    {
+        string accountPwd = Environment.GetEnvironmentVariable("FLY_SIP_PASSWORD") ?? throw new NullReferenceException("Master password not found.");
+        return accountPwd;
+    }
 }

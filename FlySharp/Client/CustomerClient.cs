@@ -10,50 +10,19 @@ namespace FlySharp.Client;
 /// </summary>
 public class CustomerClient(FlySipOptions options, HttpClient? httpClient = null) : BaseClient(options, httpClient), ICustomerClient
 {
+    public async Task<GetCustomerResponse> GetCustomerByIdAsync(int id, int wholeSalerId) => await this.CallAsync<GetCustomerResponse>("getCustomerInfo", new { i_customer = id, i_wholesaler = wholeSalerId });
 
-    /// <summary>
-    /// Retrieve a single customer using it's id.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="wholeSalerId"></param>
-    /// <returns></returns>
-    public async Task<GetCustomerResponse> GetCustomerByIdAsync(int id, int wholeSalerId) => await this.CallAsync<GetCustomerResponse>("getCustomerInfo", new {i_customer = id, i_wholesaler = wholeSalerId });
-
-    /// <summary>
-    /// retrieve list of customers.
-    /// </summary>
-    /// <param name="request"></param>
-    /// <returns></returns>
     public async Task<GetCustomersResponse> GetCustomersAsync(GetCustomersRequest request) => await this.CallAsync<GetCustomersResponse>("listCustomers", request);
-    
-    /// <summary>
-    /// Creating a new customer
-    /// </summary>
-    /// <param name="request"></param>
-    /// <returns></returns>
+
     public async Task<AddCustomerResponse> AddCustomerAsync(AddCustomerRequest request) => await this.CallAsync<AddCustomerResponse>("createCustomer", request);
-    
-    /// <summary>
-    /// Update a single customer information
-    /// </summary>
-    /// <param name="request"></param>
-    /// <returns></returns>
+
     public async Task<BaseResponse> UpdateCustomerAsync(UpdateCustomerRequest request) => await this.CallAsync<BaseResponse>("updateCustomer", request);
-    
-    /// <summary>
-    /// Top level Customer could also issue this API call for any Customer in his hierarchy, including subcustomers of his subcustomers.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="wholeSalerId"></param>
-    /// <returns></returns>
-    public async Task<BaseResponse> BlockCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("blockCustomer", new  {i_customer = id, i_wholesaler = wholeSalerId});
-    
-    /// <summary>
-    /// This application is used to unblock a customer.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="wholeSalerId"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<BaseResponse> UnblockCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("unblockCustomer", new {i_customer = id, i_wholesaler = wholeSalerId});
+
+    public async Task<BaseResponse> DeleteCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("deleteCustomer", new { i_customer = id, i_wholesaler = wholeSalerId });
+
+    public async Task<BaseResponse> BlockCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("blockCustomer", new { i_customer = id, i_wholesaler = wholeSalerId });
+
+    public async Task<BaseResponse> UnblockCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("unblockCustomer", new { i_customer = id, i_wholesaler = wholeSalerId });
+
+    public async Task<AuthCustomerResponse> AuthCustomerAsync(string username, string password) => await this.CallAsync<AuthCustomerResponse>("authCustomer", new { username, password });
 }
