@@ -2,7 +2,7 @@
 
 ## Project overview
 
-FlySharp is a C# SDK (NuGet package) wrapping the FlySIP XML-RPC API. It is used by Belgium-Provider to integrate FlySIP VOIP services. The SDK targets **net8.0** and is currently at **v1.0.5**.
+FlySharp is a C# SDK (NuGet package) wrapping the FlySIP XML-RPC API. It is used by Belgium-Provider to integrate FlySIP VOIP services. The SDK targets **net10.0** and is currently at **v1.0.5**.
 
 ## Official FlySip XML RPC api documentation : 
 
