@@ -4,6 +4,15 @@ namespace FlySharp.Http.Account.Request;
 
 public class CreateAccountRequest
 {
+    #region TRUSTED_MODE
+
+    // Required when authenticating as admin/reseller to scope the new account under a specific customer.
+    // Omit when authenticating directly as the owning customer (account then belongs to that customer).
+    [JsonProperty("i_customer")]
+    public int? ICustomer { get; set; }
+
+    #endregion
+
     #region CREDENTIALS
 
     [JsonProperty("username")]
