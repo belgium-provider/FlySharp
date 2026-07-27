@@ -145,12 +145,13 @@ using IAccountClient client = new AccountClient(options);
 |---|---|
 | `CreateAccountAsync` | `createAccount` |
 | `GetAccountByIdAsync` / `GetAccountByUsernameAsync` | `getAccountInfo` |
-| `GetAccountsAsync` | `getAccountsList` |
+| `GetAccountsAsync` | `listAccounts` |
 | `DeleteAccountAsync` / `BlockAccountAsync` / `UnblockAccountAsync` | `deleteAccount` / `blockAccount` / `unblockAccount` |
-| `ResetAccountPwdAsync` | `resetAccountPassword` |
+| `ResetAccountPwdAsync` | `resetAccountOneTimePassword` |
 | `CreateTrunkAsync` / `UpdateTrunkAsync` / `DeleteTrunkAsync` / `GetTrunkAsync` / `GetTrunksAsync` | `createTrunk` / `updateTrunk` / `deleteTrunk` / `getTrunkInfo` / `getTrunksList` |
 | `CreateTrunkConnectionAsync` / `UpdateTrunkConnectionAsync` / `DeleteTrunkConnectionAsync` / `GetTrunkConnectionAsync` / `GetTrunkConnectionsAsync` | `createTrunkConnection` / `updateTrunkConnection` / `deleteTrunkConnection` / `getTrunkConnectionInfo` / `getTrunkConnectionsList` |
-| `GetAccountMinutePlanByIdAsync` / `GetAccountRatesByIdAsync` | minute plan & rate lookups |
+| `GetAccountMinutePlanByIdAsync` | `getAccountMinutePlans` |
+| `GetAccountRatesByIdAsync` | `getAccountRates` |
 
 </details>
 
