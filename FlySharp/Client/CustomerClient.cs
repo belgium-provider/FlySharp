@@ -18,7 +18,7 @@ public class CustomerClient(FlySipOptions options, HttpClient? httpClient = null
 
     public async Task<BaseResponse> UpdateCustomerAsync(UpdateCustomerRequest request) => await this.CallAsync<BaseResponse>("updateCustomer", request);
 
-    public async Task<BaseResponse> DeleteCustomerAsync(int id) => await this.CallAsync<BaseResponse>("deleteCustomer", new { i_customer = id });
+    public async Task<BaseResponse> DeleteCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("deleteCustomer", new { i_customer = id, i_wholesaler = wholeSalerId });
 
     public async Task<BaseResponse> BlockCustomerAsync(int id, int wholeSalerId) => await this.CallAsync<BaseResponse>("blockCustomer", new { i_customer = id, i_wholesaler = wholeSalerId });
 
